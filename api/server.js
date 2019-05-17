@@ -18,17 +18,24 @@ server.get('/games', async (req, res) => {
 });
 
 // server.post('/games', async (req, res) => {
-//     const rows = await hobbits.getAll();
+//     const game = req.body
+//     try { await Games.insert(game)
+//         res.status(200).send()
+//     }
+//     catch{
+//         res.status(422).send()
+//     }
   
 //     res.status(200).json(rows);
 //   });
 
   server.post('/games', (req, res) => {
-    
         Games.insert(req.body)
         .then(game => {
+            
             res.status(200).json(game)
-        }, (err) => {
+        })
+        .catch (err => {
             res.status(422).send()
           });  
   });

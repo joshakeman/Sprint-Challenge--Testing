@@ -6,8 +6,10 @@ const server = require('./server.js');
 
 describe('server', () => {
 
+
   // open client, make a request and inspect the response
   describe('GET /', () => {
+
     it('should return 200 OK', () => {
       return request(server)
         .get('/')
@@ -22,10 +24,18 @@ describe('server', () => {
 
       it('should return 200 for POst with content', async () => {
         //no object sent
-        const res = await request(server).post('/games', {"title": "Mario", "genre": "genre"});
-        expect(res.status).toBe(200);
+        // const game = {
+        //     title: "title",
+        //     genre: "genre"
+        // }
+        request(server).post('/games').send({"title": "Mario", "genre": "b"}).then(
+            res => {
+                
+                expect(res.status).toBe(200);
+            }
+        )
       });
-
+//
     it('using the squad (async/await)', async () => {
       const res = await request(server).get('/');
       expect(res.status).toBe(200);

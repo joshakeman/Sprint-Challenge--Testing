@@ -8,11 +8,11 @@ describe('games model', () => {
 
   describe('insert()', () => {
     it('should add specified game', async () => {
-      await Games.insert({ title: 'Mario Bros', genre: 'Platformer' });
+     const { id } = await Games.insert({ title: 'Mario Bros', genre: 'Platformer' });
 
-      const games = await db('games');
-
-      expect(games).toHaveLength(1);
+      const games = await db('games').where({ id });
+        console.log(games)
+      expect(games.length).toBeTruthy()
     });
 
     it('should insert provided game', async () => {
@@ -28,11 +28,10 @@ describe('games model', () => {
     });
 
     it('inserted game should have required fields', async () => {
-        let game = await Games.insert({ title: 'Mario Bros' });
-
+        let game = await Games.insert({ title: 'Mario Bros', genre: 'genre' });
+        console.log(game)
         expect(game).toHaveProperty('title')
         expect(game).toHaveProperty('genre')
-
 
     });   
   });
