@@ -1,4 +1,6 @@
 const request = require('supertest');
+const Games = require('../games/gamesModel');
+
 
 const server = require('./server.js');
 
@@ -7,20 +9,31 @@ describe('server', () => {
   // open client, make a request and inspect the response
   describe('GET /', () => {
     it('should return 200 OK', () => {
-      // we return the promise
       return request(server)
         .get('/')
         .expect(200);
     });
 
+    it('should return 422 for POst missing content', async () => {
+        //no object sent
+        const res = await request(server).post('/games');
+        expect(res.status).toBe(422);
+      });
+
+      it('should return 200 for POst with content', async () => {
+        //no object sent
+        const res = await request(server).post('/games', {"title": "Mario", "genre": "genre"});
+        expect(res.status).toBe(200);
+      });
+
     it('using the squad (async/await)', async () => {
-      // use the squad
       const res = await request(server).get('/');
       expect(res.status).toBe(200);
     });
 
+    
+
     it('should return JSON using done callback', done => {
-      // using the done callback
       request(server)
         .get('/')
         .then(res => {
